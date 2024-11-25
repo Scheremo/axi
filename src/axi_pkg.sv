@@ -21,6 +21,14 @@
 //! AXI Package
 /// Contains all necessary type definitions, constants, and generally useful functions.
 package axi_pkg;
+
+
+  // Return either the argument minus 1 or 0 if 0; useful for IO vector width declaration
+  function automatic integer unsigned iomsb(input integer unsigned width);
+    return (width != 32'd0) ? unsigned'(width - 1) : 32'd0;
+  endfunction
+
+
     /// AXI Transaction Burst Width.
   parameter int unsigned BurstWidth  = 32'd2;
   /// AXI Transaction Response Width.

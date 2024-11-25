@@ -26,7 +26,9 @@
 ///
 /// This module contains one [`axi_serializer`](module.axi_serializer) per master port ID (given by
 /// the `AxiMstPortMaxUniqIds parameter`).
-module axi_id_serialize #(
+module axi_id_serialize
+  import axi_pkg::*;
+#(
   /// ID width of the AXI4+ATOP slave port
   parameter int unsigned AxiSlvPortIdWidth = 32'd0,
   /// Maximum number of transactions that can be in flight at the slave port.  Reads and writes are
@@ -66,7 +68,7 @@ module axi_id_serialize #(
   /// Number of Entries in the explicit ID map (default: None)
   parameter int unsigned IdMapNumEntries = 32'd0,
   /// Explicit ID map; index [0] in each entry is the input ID to match, index [1] the output ID.
-  parameter int unsigned IdMap [IdMapNumEntries-1:0][0:1] = '{default: {32'b0, 32'b0}}
+  parameter int unsigned IdMap [iomsb(IdMapNumEntries):0][0:1] = '{default: {32'b0, 32'b0}}
 ) (
   /// Rising-edge clock of both ports
   input  logic      clk_i,
