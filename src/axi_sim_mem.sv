@@ -193,7 +193,7 @@ module axi_sim_mem #(
                 w_cnt             = 0;
                 mon_w[i].last     = 1'b1;
                 error_happened[i] = axi_pkg::RESP_OKAY;
-                void'(aw_queue.pop_front());
+                void'(aw_queue.delete(0));
               end else begin
                 assert (!axi_req_i[i].w.last)
                 else $error("Did not expect last beat of W burst!");
@@ -212,7 +212,7 @@ module axi_sim_mem #(
             axi_rsp_o[i].b_valid = 1'b1;
             #(AcqDelay - ApplDelay);
             if (axi_req_i[i].b_ready) begin
-              void'(b_queue.pop_front());
+              void'(b_queue.delete(0));
             end
           end
         end
